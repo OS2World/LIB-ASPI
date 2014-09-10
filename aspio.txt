@@ -1,0 +1,98 @@
+-*- mode: indented-text -*-
+
+	ASPI Interface Library - source and samples
+
+PURPOSE
+
+    This  library  and applications    were  coded to test   some SCSI
+    functions on several devices I  own.  I wanted  to write a  device
+    driver  and decided it  would  be easier to test  the  logic in an
+    application as   in a driver.   I  cleaned  up the code   and hope
+    someone else may get something out of it.
+
+
+REQUIREMENTS
+
+    Installed  OS2ASPI.DMD.  This driver  is   provided with OS/2  2.0
+    service pack and higher.  If you still use 2.0 you can get it from
+    IBM as a separate archive.  To access devices which are managed by
+    other DMDs use the option /ALL (see online help).
+
+    Installed ASPI Router for OS/2.   This great driver is from Daniel
+    Dorau (woodst@cs.tu-berlin.de),  I tested Version 1.01 (June 1997)
+    successfully.  It is  available as aspir101.zip  (44288 bytes) and
+    contains an  own ASPI library (C++)  which  I obviously don't like
+    much otherwise I would have used it. ;-)
+
+
+    An  ASPI specification is  usefull   for understanding the  source
+    code.  It is  available from Adaptec, many  BBS (including my own)
+    and FTP Servers as aspios2.txt.
+
+    If you're going  to do anything in SCSI  programming  you need the
+    SCSI-II  (or higher) specification.   It has always been available
+    from the  NCR BBS.  Now  that NCR is Symbios  Logic  this may have
+    changed, just check  their BBS or  Website.  Some  BBS may have  a
+    copy, ASPI Router refers to 'http://abekas.com:8080/SCSI2/'.
+
+
+FUTURE VERSIONS
+
+    If  someone can tell   me how  to do  ASPI   I/Os without  an ASPI
+    Router-like driver  I will happily adjust this  library to use the
+    direct access.  All my own tries totally locked the system up. :-(
+
+    Please contact me if you added things so I can incorporate it in
+    the archive.
+
+
+SOURCE CODE
+
+    There is no copyright  on the source code  (except part of scsi.h,
+    see header).   There should  be  no compiler-depencies either.   I
+    included a 'compiler.mkf' I use  to switch compilers easily,  just
+    define COMPILER to your favourite compiler and call make.
+
+    One word about makes: I like the DMake package from Dennis Vadura,
+    it is available as dmake40o.zip or dmake38.zip on many BBS but any
+    GNU Make compatible package should do.
+
+
+AUTHOR
+
+    Vitus Jensen,  can be reached via   Fidonet on 2:2474/424, OS2Net,
+    TeamOS/2 Net and  via Vitus_Jensen@teaparty.fido.de (if you really
+    have to).
+
+    Other software to look for (some words from our sponsor):
+
+    Physical Disk Routines (pdsk2.zip)
+
+	Some  OS/2 utilities to  access hard  disks by physical sector
+	numbers, source included.
+
+    DskSleep (dsksl096.zip)
+
+	DSKSLEEP.FLT - a filter driver   to stop your SCSI disks  when
+	they  haven't been accessed for  some  time. Timeout selection
+	per disk, IOCtl interface. For OS/2 2.0 and above.
+
+    VRAID (vraid20.zip)
+
+	VRAID - Software RAID   for  OS/2 2.0  and above.   Build Disk
+	Arrays   from  IDE  and    SCSI  drives!   RAID  1, RAID    0,
+	Chaining. Shareware.
+
+    SCSIOpt (scsiopt2.zip)
+
+	SCSIOpt.flt modifies performance related settings of your SCSI
+	devices.  Source included.
+
+    OS/2 Play (play2_10.zip)
+
+	Play  GWBASIC-style  music  pieces from an  OS/2  application!
+	Source and sample included (C).
+
+    RCopy (rcopy01.zip)
+
+	RCopy is a replacement for xcopy /s/e, fast, Source included.

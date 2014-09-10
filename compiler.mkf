@@ -1,0 +1,141 @@
+# -*- makefile -*-
+# $Source: r:/source/compiler.mkf,v $
+# $Revision: 1.7 $
+# $Date: 1999/06/18 23:42:21 $
+# $Locker: vitus $
+#
+#	Compiler Definitions
+#
+# $Log: compiler.mkf,v $
+# Revision 1.7  1999/06/18 23:42:21  vitus
+# - VAC: mehr (alle sinnvollen) Warnungen
+#
+# Revision 1.6  1998/10/21 23:54:52  vitus
+# - NDEBUG define to non-debug compiler switches
+# - corrected /PM:PM option to IBM compiler
+#
+# Revision 1.5  1998/06/05 22:23:59  vitus
+# - corrected CL2PM for GNUC
+#
+# Revision 1.4  1997/11/25 23:09:43  vitus
+# - added WatCom C/C++ 10.5
+#
+# Revision 1.3  1997/09/22 23:24:06  vitus
+# added CLIB macro (library manager)
+# added /PM:xxx option to GNU C
+#
+# Revision 1.2  1997/09/16 21:21:37  vitus
+# added default warning level
+# splitted GNUC in GNUC and UGNUC
+#
+# Revision 1.1  1997/09/07 12:27:10  vitus
+# Initial revision
+#
+.IF $(COMPILER) == $(NULL)
+.ERROR "compiler.mkf - please select compiler first"
+.ENDIF
+
+.IF $(COMPILER) == IBMC
+CC2 = icc -Q -C -Fi -Si
+CL2PM = icc -Q -B"/PM:PM"
+CL2VIO = icc -Q -B"/PM:VIO"
+RC = rc -n
+
+OBJ = obj
+LIB = lib
+
+.IF $(DEBUG) == 0
+_CFLAGS = -W2all -O+ -DNDEBUG
+.ELSE
+_CFLAGS = -W2all -Tm -Ti -Tx
+.ENDIF
+
+.ENDIF # IBM CSet++
+
+
+.IF $(COMPILER) == VAC
+CC2 = icc -Q -C -Fi -Si
+CL2PM = icc -Q -B/PM:PM
+CL2VIO = icc -Q -B/PM:VIO
+RC = rc -n
+CLIB = ILIB /quiet /noignorecase
+
+OBJ = obj
+LIB = lib
+
+# -Wcmp+cns+cpy+dcl+eff+ini+lan+obs+ord+por+pro+rea+ret+trd+und+uni+use+ ist
+# nicht sehr sinvoll...
+
+.IF $(DEBUG) == 0
+_CFLAGS = -W3 -O+ -Oc -DNDEBUG
+.ELSE
+_CFLAGS = -W3all+ppt-gnr-vft-eff-par- -Gd -Tm -Ti -Tx
+.ENDIF
+
+.ENDIF # IBM Visual Age for C++
+
+
+
+# GNU C 2.7.0 as close to UNIX as possible (programs run under DOS)
+
+.IF $(COMPILER) == UGNUC
+CC2 = gcc -c
+CL2PM = gcc
+CL2VIO = gcc
+RC = rc -n
+CLIB = ar
+
+OBJ = o
+LIB = a
+
+.IF $(DEBUG) == 0
+_CFLAGS = -Wall -Zcrtdll -O3 -s -DNDEBUG
+.ELSE
+_CFLAGS = -Wall -Zcrtdll -g
+.ENDIF
+
+.ENDIF # GNU C 2.7.0
+
+
+
+# GNU C 2.7.0 usefull for OS/2 only programs (very small)
+
+.IF $(COMPILER) == GNUC
+CC2 = gcc -c -Zomf
+CL2PM = gcc -Zomf -Zlinker /PM:PM
+CL2VIO = gcc -Zomf -Zlinker /PM:VIO
+RC = rc -n
+CLIB = emxomfar
+
+OBJ = obj
+LIB = lib
+
+.IF $(DEBUG) == 0
+_CFLAGS = -Wall -Zcrtdll -O3 -s -DNDEBUG
+.ELSE
+_CFLAGS = -Wall -Zcrtdll -g
+.ENDIF
+
+.ENDIF # GNU C 2.7.0
+
+
+
+# WatCom C/C++ 10.5
+
+.IF $(COMPILER) == WATCOMC
+CC2 = wcc386 -zq -bt=OS2 -3s -i=$(WATCOM)\h\os2
+CL2PM = wcl386 -zq -l=OS2V2_PM -3s
+CL2VIO = wcl386 -zq -l=OS2V2 -3s
+RC = rc -n
+CLIB = wlib
+
+OBJ = obj
+LIB = lib
+
+.IF $(DEBUG) == 0
+_CFLAGS = -w4 -oax -DNDEBUG
+.ELSE
+_CFLAGS = -w4 -d2
+.ENDIF
+
+.ENDIF # WatCom C/C++ 10.5
