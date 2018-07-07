@@ -5,7 +5,7 @@ ASPI Interface Library
 
 LICENSE
 ===============
-* 
+* BSD 3 Clauses
 
 COMPILE TOOLS
 ===============
